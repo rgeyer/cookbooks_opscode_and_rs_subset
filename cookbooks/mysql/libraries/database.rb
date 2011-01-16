@@ -8,6 +8,11 @@ module Opscode
   module Mysql
     module Database
       def db
+        begin
+          require 'mysql'
+        rescue LoadError
+          Chef::Log.warn("Missing gem 'mysql'")
+        end
         @@db ||= ::Mysql.new new_resource.host, new_resource.username, new_resource.password
       end
     end
