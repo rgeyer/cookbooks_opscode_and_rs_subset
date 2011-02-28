@@ -21,6 +21,12 @@ attribute "nginx/dir",
   :default => "/etc/nginx",
   :recipes => ["nginx::default", "nginx::source"]
 
+attribute "nginx/content_dir",
+  :display_name => "Nginx Content Directory",
+  :description => "Location of nginx content files",
+  :default => "/var/www",
+  :recipes => ["nginx::default", "nginx::source"]
+
 attribute "nginx/log_dir",
   :display_name => "Nginx Log Directory",
   :description => "Location for nginx logs",

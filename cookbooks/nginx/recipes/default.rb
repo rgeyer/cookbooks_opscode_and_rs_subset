@@ -26,6 +26,18 @@ directory node[:nginx][:log_dir] do
   action :create
 end
 
+## Move Nginx
+content_dir = node[:nginx][:content_dir]
+bash 'Move Nginx Data Dir' do
+  not_if do File.directory?(content_dir) end
+  code <<-EOF
+    `mkdir -p #{content_dir}`
+    `cp -rf /var/www/. #{content_dir}`
+    `rm -rf /var/www`
+    `ln -nsf #{content_dir} /var/www`
+  EOF
+end
+
 %w{nxensite nxdissite}.each do |nxscript|
   template "/usr/sbin/#{nxscript}" do
     source "#{nxscript}.erb"

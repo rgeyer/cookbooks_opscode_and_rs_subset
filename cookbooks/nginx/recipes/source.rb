@@ -81,6 +81,18 @@ end
   end
 end
 
+## Move Nginx
+content_dir = node[:nginx][:content_dir]
+bash 'Move Nginx Data Dir' do
+  not_if do File.directory?(content_dir) end
+  code <<-EOF
+    `mkdir -p #{content_dir}`
+    `cp -rf /var/www/. #{content_dir}`
+    `rm -rf /var/www`
+    `ln -nsf #{content_dir} /var/www`
+  EOF
+end
+
 template "nginx.conf" do
   path "#{node[:nginx][:dir]}/nginx.conf"
   source "nginx.conf.erb"
