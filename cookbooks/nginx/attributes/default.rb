@@ -5,15 +5,15 @@ default[:nginx][:content_dir]  = "/var/www"
 
 case platform
 when "debian","ubuntu"
-  set[:nginx][:dir]     = "/etc/nginx"
-  set[:nginx][:log_dir] = "/var/log/nginx"
-  set[:nginx][:user]    = "www-data"
-  set[:nginx][:binary]  = "/usr/sbin/nginx"
+  default[:nginx][:dir]     = "/etc/nginx"
+  default[:nginx][:log_dir] = "/var/log/nginx"
+  default[:nginx][:user]    = "www-data"
+  default[:nginx][:binary]  = "/usr/sbin/nginx"
 else
-  set[:nginx][:dir]     = "/etc/nginx"
-  set[:nginx][:log_dir] = "/var/log/nginx"
-  set[:nginx][:user]    = "www-data"
-  set[:nginx][:binary]  = "/usr/sbin/nginx"
+  default[:nginx][:dir]     = "/etc/nginx"
+  default[:nginx][:log_dir] = "/var/log/nginx"
+  default[:nginx][:user]    = "www-data"
+  default[:nginx][:binary]  = "/usr/sbin/nginx"
 end
 
 default[:nginx][:configure_flags] = [

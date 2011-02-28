@@ -26,6 +26,13 @@ directory node[:nginx][:log_dir] do
   action :create
 end
 
+## Link logs back to /var/log if they've been moved, so that logrotate works
+if node[:nginx][:log_dir] != "/var/log/nginx"
+  link "/var/log/nginx" do
+    to node[:nginx][:log_dir]
+  end
+end
+
 ## Move Nginx
 content_dir = node[:nginx][:content_dir]
 bash 'Move Nginx Data Dir' do
