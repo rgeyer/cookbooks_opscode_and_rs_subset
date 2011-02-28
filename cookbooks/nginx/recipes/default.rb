@@ -21,6 +21,7 @@
 package "nginx"
 
 directory node[:nginx][:log_dir] do
+  recursive true
   mode 0755
   owner node[:nginx][:user]
   action :create
