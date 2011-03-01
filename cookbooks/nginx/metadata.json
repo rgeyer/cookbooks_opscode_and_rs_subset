@@ -5,6 +5,7 @@
   "providing": {
   },
   "recipes": {
+    "nginx::configure_ssl_reverse_proxy": "Sets nginx up as a reverse proxy for ssl",
     "nginx::source": "Installs nginx from source and sets up configuration with Debian apache style with sites-enabled/sites-available",
     "nginx": "Installs nginx package and sets up configuration with Debian apache style with sites-enabled/sites-available"
   },
@@ -17,6 +18,35 @@
   "groupings": {
   },
   "attributes": {
+    "nginx/dest_fqdn": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "nginx::configure_ssl_reverse_proxy"
+      ],
+      "description": "The FQDN the server that will back the proxy, the actual source of the responses for HTTP requests.",
+      "display_name": "Proxy Destination FQDN"
+    },
+    "nginx/aliases": {
+      "required": "recommended",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": [
+
+      ],
+      "type": "array",
+      "recipes": [
+        "nginx::configure_ssl_reverse_proxy"
+      ],
+      "description": "The possible hostname aliases (if any) for the vhost.  For instance to host the same content at www.yourdomain.com and yourdomain.com simply put \"yourdomain.com\" here.  Many values can be supplied, separated by spaces. The full syntax which Nginx supports for the server_name directive are applicable here, http://wiki.nginx.org/HttpCoreModule#server_name",
+      "display_name": "Nginx Site Aliases"
+    },
     "nginx/worker_connections": {
       "required": "optional",
       "calculated": false,
@@ -31,6 +61,33 @@
       ],
       "description": "Number of connections per worker",
       "display_name": "Nginx Worker Connections"
+    },
+    "nginx/force_https": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+        "true",
+        "false"
+      ],
+      "type": "string",
+      "recipes": [
+        "nginx::configure_ssl_reverse_proxy"
+      ],
+      "description": "A boolean indicating if the proxy should redirect all requests to the destination using HTTPS.  This setting requires nginx/proxy_http to be true.",
+      "display_name": "Force HTTPS?"
+    },
+    "nginx/dest_port": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "nginx::configure_ssl_reverse_proxy"
+      ],
+      "description": "The the proxy port to forward to",
+      "display_name": "Proxy Port"
     },
     "nginx/gzip_types": {
       "required": "optional",
@@ -145,6 +202,33 @@
       "description": "Location of nginx configuration files",
       "display_name": "Nginx Directory"
     },
+    "nginx/proxy_http": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+        "true",
+        "false"
+      ],
+      "type": "string",
+      "recipes": [
+        "nginx::configure_ssl_reverse_proxy"
+      ],
+      "description": "A boolean indicating if the proxy should listen and forward traffic on port 80 (HTTP)",
+      "display_name": "Proxy for HTTP?"
+    },
+    "nginx/accept_fqdn": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "nginx::configure_ssl_reverse_proxy"
+      ],
+      "description": "The FQDN of a domain name which will be proxied to another server and port",
+      "display_name": "Proxy for FQDN"
+    },
     "nginx/server_names_hash_bucket_size": {
       "required": "optional",
       "calculated": false,
@@ -158,6 +242,19 @@
         "nginx::source"
       ],
       "display_name": "Nginx Server Names Hash Bucket Size"
+    },
+    "nginx/pkcs12_pass": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "nginx::configure_ssl_reverse_proxy"
+      ],
+      "description": "The password used to protect the PKCS12 file.  This password is specified when the certificate is exported from windows",
+      "display_name": "PKCS12 Cert Password"
     },
     "nginx/worker_processes": {
       "required": "optional",
@@ -188,6 +285,19 @@
       ],
       "description": "Version of HTTP Gzip",
       "display_name": "Nginx Gzip HTTP Version"
+    },
+    "nginx/s3_cert_bucket": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "nginx::configure_ssl_reverse_proxy"
+      ],
+      "description": "The S3 bucket containing site certificate and key pairs in the pkcs12 format.",
+      "display_name": "S3 Bucket"
     },
     "nginx/log_dir": {
       "required": "optional",
@@ -257,6 +367,9 @@
 
     ],
     "build-essential": [
+
+    ],
+    "utils": [
 
     ]
   },

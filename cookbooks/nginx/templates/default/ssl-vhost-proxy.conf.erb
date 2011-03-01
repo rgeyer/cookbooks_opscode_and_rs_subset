@@ -1,0 +1,70 @@
+<% if @params[:listen_on_http] -%>
+upstream proxy {
+  server <%= @params[:dest_fqdn] %>;
+}
+
+server {
+  listen 80;
+  server_name <%= @params[:accept_fqdn] %><% if @params[:aliases] -%><% @params[:aliases].each do |a| %><%= " #{a}" %> <% end %><% end %>;
+
+  access_log <%= node[:nginx][:log_dir] %>/<%= @params[:accept_fqdn] %>-access.log;
+  error_log <%= node[:nginx][:log_dir] %>/<%= @params[:accept_fqdn] %>-error.log;
+
+  root <%= node[:nginx][:content_dir] %>/<%= @params[:accept_fqdn] %>/htdocs/;
+
+  # Canonical host, <%= @params[:accept_fqdn] %>
+  # The "right" Nginx way - http://wiki.nginx.org/Pitfalls#Taxing_Rewrites
+  rewrite ^ http://<%= @params[:accept_fqdn] %>$request_uri? permanent
+
+<% if @params[:force_https] -%>
+  # Force SSL
+  rewrite ^ https://<%= @params[:accept_fqdn] %>$request_uri? permanent
+<% end %>
+
+  # Display a maintenance page if it exists.
+  try_files /system/maintenance.html @proxy;
+
+  location @proxy {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+    proxy_redirect off;
+
+    proxy_pass http://proxy;
+  }
+}
+<% end %>
+
+upstream sslproxy {
+  server <%= @params[:dest_fqdn] %>:<%= @params[:dest_port] %>;
+}
+
+server {
+  listen 443 default ssl;
+  server_name <%= @params[:accept_fqdn] %><% if @params[:aliases] -%><% @params[:aliases].each do |a| %><%= " #{a}" %> <% end %><% end %>;
+
+  access_log <%= node[:nginx][:log_dir] %>/<%= @params[:accept_fqdn] %>-access.log;
+  error_log <%= node[:nginx][:log_dir] %>/<%= @params[:accept_fqdn] %>-error.log;
+
+  root <%= node[:nginx][:content_dir] %>/<%= @params[:accept_fqdn] %>/htdocs/;
+
+  # Canonical host, <%= @params[:accept_fqdn] %>
+  # The "right" Nginx way - http://wiki.nginx.org/Pitfalls#Taxing_Rewrites
+  rewrite ^ https://<%= @params[:accept_fqdn] %>$request_uri? permanent
+
+  # Display a maintenance page if it exists.
+  try_files /system/maintenance.html @proxy;
+
+  # SSL config
+  ssl_certificate <%= node[:nginx][:dir] %>/ssl/<%= @params[:accept_fqdn] %>.crt
+  ssl_certificate_key <%= node[:nginx][:dir] %>/ssl/<%= @params[:accept_fqdn] %>.key
+
+  location @proxy {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+    proxy_redirect off;
+
+    proxy_pass https://sslproxy;
+  }
+}
