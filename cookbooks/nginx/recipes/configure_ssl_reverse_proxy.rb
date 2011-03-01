@@ -31,7 +31,7 @@ end
 nginx_enable_vhost accept_fqdn do
   cookbook "nginx"
   template "ssl-vhost-proxy.conf.erb"
-  accept_fqdn accept_fqdn
+  fqdn accept_fqdn
   aliases node[:nginx][:aliases]
   dest_fqdn node[:nginx][:dest_fqdn]
   dest_port node[:nginx][:dest_port]
