@@ -24,7 +24,7 @@ define :nginx_enable_vhost, :fqdn => nil, :aliases => nil do
   directory "/etc/nginx/sites-available/#{fqdn}.d"
 
   # START - The equivalent of web_app in the apache2 cookbook
-  include_recipe "nginx"
+  include_recipe "nginx::default"
 
   template "#{node[:nginx][:dir]}/sites-available/#{fqdn}.conf" do
     source params[:template] || "vhost.conf.erb"
