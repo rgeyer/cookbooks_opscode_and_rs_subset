@@ -28,7 +28,7 @@ nginx_site "default" do
   enable false
 end
 
-nginx_enable_vhost fqdn do
+nginx_enable_vhost accept_fqdn do
   cookbook "nginx"
   template "ssl-vhost-proxy.conf.erb"
   accept_fqdn accept_fqdn
