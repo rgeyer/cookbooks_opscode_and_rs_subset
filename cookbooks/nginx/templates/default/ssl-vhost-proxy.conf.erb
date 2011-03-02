@@ -3,26 +3,33 @@ upstream proxy {
   server <%= @params[:dest_fqdn] %>;
 }
 
+<% if @params[:aliases] -%>
 server {
   listen 80;
-  server_name <%= @params[:fqdn] %><% if @params[:aliases] -%><% @params[:aliases].each do |a| %><%= " #{a}" %> <% end %><% end %>;
+  server_name <% @params[:aliases].each do |a| -%><%= " #{a}" %><% end -%>;
+
+  # Canonical host, <%= @params[:fqdn] %>
+  # The "right" Nginx way - http://wiki.nginx.org/Pitfalls#Taxing_Rewrites
+  rewrite ^ http://<%= @params[:fqdn] %>$request_uri? permanent;
+}
+<% end -%>
+
+server {
+  listen 80;
+  server_name <%= @params[:fqdn] %>;
 
   access_log <%= node[:nginx][:log_dir] %>/<%= @params[:fqdn] %>-access.log;
   error_log <%= node[:nginx][:log_dir] %>/<%= @params[:fqdn] %>-error.log;
 
   root <%= node[:nginx][:content_dir] %>/<%= @params[:fqdn] %>/htdocs/;
 
-  # Canonical host, <%= @params[:fqdn] %>
-  # The "right" Nginx way - http://wiki.nginx.org/Pitfalls#Taxing_Rewrites
-  rewrite ^ http://<%= @params[:fqdn] %>$request_uri? permanent
+  # Display a maintenance page if it exists.
+  try_files /system/maintenance.html @proxy;
 
 <% if @params[:force_https] -%>
   # Force SSL
-  rewrite ^ https://<%= @params[:fqdn] %>$request_uri? permanent
-<% end %>
-
-  # Display a maintenance page if it exists.
-  try_files /system/maintenance.html @proxy;
+  rewrite ^ https://<%= @params[:fqdn] %>$request_uri? permanent;
+<% else -%>
 
   location @proxy {
     proxy_set_header X-Real-IP $remote_addr;
@@ -32,32 +39,40 @@ server {
 
     proxy_pass http://proxy;
   }
+<% end -%>
 }
-<% end %>
+<% end -%>
 
 upstream sslproxy {
   server <%= @params[:dest_fqdn] %>:<%= @params[:dest_port] %>;
 }
 
+<% if @params[:aliases] -%>
+server {
+  listen 443;
+  server_name <% @params[:aliases].each do |a| -%><%= " #{a}" %><% end -%>;
+
+  # Canonical host, <%= @params[:fqdn] %>
+  # The "right" Nginx way - http://wiki.nginx.org/Pitfalls#Taxing_Rewrites
+  rewrite ^ https://<%= @params[:fqdn] %>$request_uri? permanent;
+}
+<% end -%>
+
 server {
   listen 443 default ssl;
-  server_name <%= @params[:fqdn] %><% if @params[:aliases] -%><% @params[:aliases].each do |a| %><%= " #{a}" %> <% end %><% end %>;
+  server_name <%= @params[:fqdn] %>;
 
   access_log <%= node[:nginx][:log_dir] %>/<%= @params[:fqdn] %>-access.log;
   error_log <%= node[:nginx][:log_dir] %>/<%= @params[:fqdn] %>-error.log;
 
   root <%= node[:nginx][:content_dir] %>/<%= @params[:fqdn] %>/htdocs/;
 
-  # Canonical host, <%= @params[:fqdn] %>
-  # The "right" Nginx way - http://wiki.nginx.org/Pitfalls#Taxing_Rewrites
-  rewrite ^ https://<%= @params[:fqdn] %>$request_uri? permanent
-
   # Display a maintenance page if it exists.
   try_files /system/maintenance.html @proxy;
 
   # SSL config
-  ssl_certificate <%= node[:nginx][:dir] %>/ssl/<%= @params[:fqdn] %>.crt
-  ssl_certificate_key <%= node[:nginx][:dir] %>/ssl/<%= @params[:fqdn] %>.key
+  ssl_certificate <%= node[:nginx][:dir] %>/ssl/<%= @params[:fqdn] %>.crt;
+  ssl_certificate_key <%= node[:nginx][:dir] %>/ssl/<%= @params[:fqdn] %>.key;
 
   location @proxy {
     proxy_set_header X-Real-IP $remote_addr;
