@@ -16,4 +16,5 @@ remote_file collectd_conf do
   mode 0644
   owner "root"
   group "root"
+  notifies :restart, resources(:service => "collectd")
 end
