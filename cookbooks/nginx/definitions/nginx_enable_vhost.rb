@@ -8,7 +8,7 @@ define :nginx_enable_vhost, :fqdn => nil, :aliases => nil do
   # attributes cause all attributes to be nil.  This allows the user to provide a value
   # for the optional input which will be ignored.
   # RightScale ticket #101228-000015
-  params[:aliases] = nil if params[:aliases] = "blank"
+  params[:aliases] = nil if params[:aliases] == "blank"
   Chef::Log.info "Aliaes just after reassigning them #{params[:aliases]}"
 
   Chef::Log.info "Setting up vhost for fqdn (#{fqdn})"
