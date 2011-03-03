@@ -1,10 +1,7 @@
-# Aliases yo <%= @params[:aliases] %>
-
 <% if @params[:listen_on_http] -%>
 upstream proxy {
   server <%= @params[:dest_fqdn] %>;
 }
-
 <% if @params[:aliases] -%>
 server {
   listen 80;
@@ -48,7 +45,6 @@ server {
 upstream sslproxy {
   server <%= @params[:dest_fqdn] %>:<%= @params[:dest_port] %>;
 }
-
 <% if @params[:aliases] -%>
 server {
   listen 443;
