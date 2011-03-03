@@ -1,3 +1,5 @@
+# Aliases yo <%= @params[:aliases] %>
+
 <% if @params[:listen_on_http] -%>
 upstream proxy {
   server <%= @params[:dest_fqdn] %>;
