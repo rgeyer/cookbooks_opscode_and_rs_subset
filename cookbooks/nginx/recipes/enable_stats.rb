@@ -1,4 +1,7 @@
 include_recipe "nginx::default"
+
+node[:rs_utils][:process_list] += " nginx" unless node[:rs_utils][:process_list] =~ /nginx/
+
 include_recipe "rs_utils::setup_monitoring"
 
 nginx_conf    = ::File.join(node[:nginx][:dir], "conf.d", "stats.conf")
