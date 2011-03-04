@@ -35,6 +35,12 @@ end
 
 ## Link logs back to /var/log if they've been moved, so that logrotate works
 if node[:nginx][:log_dir] != "/var/log/nginx"
+  # Gotta delete the bad boy first, otherwise it ends up as a link inside the directory
+  directory "/var/log/nginx" do
+    recursive true
+    action :delete
+  end
+
   link "/var/log/nginx" do
     to node[:nginx][:log_dir]
   end
