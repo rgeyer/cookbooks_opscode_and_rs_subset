@@ -18,7 +18,13 @@
 # limitations under the License.
 #
 
-package "nginx"
+package "python-software-properties"
+execute "add-apt-repository" do
+  command "add-apt-repository ppa:nginx/stable && apt-get update"
+  action :run
+end
+
+package "nginx-full"
 
 directory node[:nginx][:log_dir] do
   recursive true
