@@ -8,7 +8,7 @@
     "nginx::configure_ssl_reverse_proxy": "Sets nginx up as a reverse proxy for ssl",
     "nginx::source": "Installs nginx from source and sets up configuration with Debian apache style with sites-enabled/sites-available",
     "nginx": "Installs nginx package and sets up configuration with Debian apache style with sites-enabled/sites-available",
-    "nginx::enable_stats": "Configured collectd stat collection."
+    "nginx::enable_stats": "Configure collectd stat collection for the nginx process, as well as php-fpm (as appropriate)."
   },
   "maintainer": "Opscode, Inc.",
   "replacing": {

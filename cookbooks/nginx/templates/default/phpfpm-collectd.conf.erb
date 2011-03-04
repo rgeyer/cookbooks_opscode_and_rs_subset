@@ -1,0 +1,19 @@
+# Instrumentation method "borrowed" from;
+# http://bethesignal.org/blog/2009/07/22/watching-nginx-upstreams-with-collectd/
+<Plugin "tail">
+  <File "<%= node[:nginx][:log_dir] %>/phpfpm-upstream.log">
+  Instance "nginx_phpfpm"
+    <Match>
+      Regex "^.*"
+      DSType "CounterInc"
+      Type "counter"
+      Instance "requests"
+    </Match>
+    <Match>
+      Regex " upstream ([0-9.]*) "
+      DSType "GaugeAverage"
+      Type "gauge"
+      Instance "upstream"
+    </Match>
+  </File>
+</Plugin>
