@@ -18,9 +18,13 @@
 # limitations under the License.
 #
 
-package "python-software-properties"
-e = execute "add-apt-repository" do
-  command "add-apt-repository ppa:nginx/stable && apt-get update -o Acquire::http::No-Cache"
+
+e = bash "add-apt-repository" do
+  code <<-EOF
+apt-get install python-software-properties
+add-apt-repository ppa:nginx/stable
+apt-get update -o Acquire::http::No-Cache
+EOF
   action :nothing
 end
 
