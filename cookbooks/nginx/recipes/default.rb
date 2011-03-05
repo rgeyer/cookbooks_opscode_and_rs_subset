@@ -19,10 +19,12 @@
 #
 
 package "python-software-properties"
-execute "add-apt-repository" do
-  command "add-apt-repository ppa:nginx/stable && apt-get update"
-  action :run
+e = execute "add-apt-repository" do
+  command "add-apt-repository ppa:nginx/stable && apt-get update -o Acquire::http::No-Cache"
+  action :nothing
 end
+
+e.run_action(:run)
 
 package "nginx-full"
 
