@@ -21,7 +21,7 @@ end
 # Instrumentation method "borrowed" from;
 # http://bethesignal.org/blog/2009/07/22/watching-nginx-upstreams-with-collectd/
 template fpm_collectd_conf do
-  source "phpfpm-collectd.conf"
+  source "phpfpm-collectd.conf.erb"
 end
 
 remote_file nginx_collectd_conf do
