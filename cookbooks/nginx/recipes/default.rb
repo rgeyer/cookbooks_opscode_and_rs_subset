@@ -21,9 +21,9 @@
 
 e = bash "add-apt-repository" do
   code <<-EOF
-apt-get install python-software-properties
+apt-get -y -q install python-software-properties
 add-apt-repository ppa:nginx/stable
-apt-get update -o Acquire::http::No-Cache
+apt-get update -o Acquire::http::No-Cache=1
 EOF
   action :nothing
 end
