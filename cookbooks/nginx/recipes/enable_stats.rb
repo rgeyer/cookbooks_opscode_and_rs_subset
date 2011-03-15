@@ -9,8 +9,8 @@ include_recipe "rs_utils::setup_monitoring"
 nginx_conf    = ::File.join(node[:nginx][:dir], "sites-available", "default.d", "nginx_stats.conf")
 nginx_collectd_conf = ::File.join(node[:rs_utils][:collectd_plugin_dir], "nginx.conf")
 
-remote_file nginx_conf do
-  source "stats.conf"
+template nginx_conf do
+  source "stats.conf.erb"
   mode 0644
   owner "root"
   group "root"
