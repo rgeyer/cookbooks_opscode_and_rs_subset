@@ -6,7 +6,7 @@ node[:rs_utils][:process_list] += " nginx" unless node[:rs_utils][:process_list]
 
 include_recipe "rs_utils::setup_monitoring"
 
-nginx_conf    = ::File.join(node[:nginx][:dir], "sites-available", "default.d", "nginx_stats.conf")
+nginx_conf    = ::File.join(node[:nginx][:dir], "sites-available", "#{node[:hostname]}.d", "nginx_stats.conf")
 nginx_collectd_conf = ::File.join(node[:rs_utils][:collectd_plugin_dir], "nginx.conf")
 
 template nginx_conf do
