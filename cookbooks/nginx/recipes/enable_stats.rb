@@ -16,8 +16,8 @@ remote_file nginx_conf do
   group "root"
 end
 
-remote_file nginx_collectd_conf do
-  source "nginx-collectd.conf"
+template nginx_collectd_conf do
+  source "nginx-collectd.conf.erb"
   mode 0644
   owner "root"
   group "root"

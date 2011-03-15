@@ -1,6 +1,8 @@
 server {
   listen   80;
   server_name  <%= node[:hostname] %>;
+  allow <%= node.ec2.local_ipv4 %>;
+  deny all;
 
   access_log  <%= node[:nginx][:log_dir] %>/localhost.access.log;
   error_log <%= node[:nginx][:log_dir] %>/localhost.error.log;

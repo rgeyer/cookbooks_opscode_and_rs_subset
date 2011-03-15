@@ -24,11 +24,6 @@ rsa_keypair_from_pkcs12 "Convert PKCS12 to RSA keypair" do
   pkcs12_pass node[:nginx][:pkcs12_pass]
 end
 
-# Disable the default site
-nginx_site "default" do
-  enable false
-end
-
 nginx_enable_vhost accept_fqdn do
   cookbook "nginx"
   template "ssl-vhost-proxy.conf.erb"

@@ -1,5 +1,5 @@
 define :nginx_enable_vhost, :fqdn => nil, :aliases => nil do
-  fqdn = params[:fqdn]
+  fqdn = params[:fqdn] || params[:name]
   docroot = ::File.join(node[:nginx][:content_dir],fqdn,"htdocs")
   systemroot = ::File.join(docroot, "system")
 

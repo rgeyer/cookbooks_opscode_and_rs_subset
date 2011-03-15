@@ -86,7 +86,11 @@ service "nginx" do
   action [ :enable, :start ]
 end
 
-nginx_enable_vhost "default" do
-  fqdn "default"
+# Disable the default site
+nginx_site "default" do
+  enable false
+end
+
+nginx_enable_vhost node.hostname do
   template "default-site.erb"
 end
