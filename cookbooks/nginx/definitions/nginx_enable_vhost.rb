@@ -21,7 +21,10 @@ define :nginx_enable_vhost, :fqdn => nil, :aliases => nil do
   end
 
   # Create a directory for extending the vhost config
-  directory "/etc/nginx/sites-available/#{fqdn}.d"
+  directory "/etc/nginx/sites-available/#{fqdn}.d" do
+    recursive true
+    action :create
+  end
 
   # START - The equivalent of web_app in the apache2 cookbook
   include_recipe "nginx::default"

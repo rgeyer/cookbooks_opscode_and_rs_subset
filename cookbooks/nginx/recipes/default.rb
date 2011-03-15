@@ -81,11 +81,8 @@ template "nginx.conf" do
   mode 0644
 end
 
-template "#{node[:nginx][:dir]}/sites-available/default" do
-  source "default-site.erb"
-  owner "root"
-  group "root"
-  mode 0644
+nginx_enable_vhost "default" do
+  template "default-site.erb"
 end
 
 service "nginx" do
