@@ -81,12 +81,12 @@ template "nginx.conf" do
   mode 0644
 end
 
-nginx_enable_vhost "default" do
-  fqdn "default"
-  template "default-site.erb"
-end
-
 service "nginx" do
   supports :status => true, :restart => true, :reload => true
   action [ :enable, :start ]
+end
+
+nginx_enable_vhost "default" do
+  fqdn "default"
+  template "default-site.erb"
 end
