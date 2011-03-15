@@ -82,6 +82,7 @@ template "nginx.conf" do
 end
 
 nginx_enable_vhost "default" do
+  fqdn "default"
   template "default-site.erb"
 end
 
