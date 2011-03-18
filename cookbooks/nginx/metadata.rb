@@ -11,6 +11,7 @@ recipe "nginx", "Installs nginx package and sets up configuration with Debian ap
 recipe "nginx::source", "Installs nginx from source and sets up configuration with Debian apache style with sites-enabled/sites-available"
 recipe "nginx::configure_ssl_reverse_proxy","Sets nginx up as a reverse proxy for ssl"
 recipe "nginx::enable_stats","Configure collectd stat collection for the nginx process, as well as php-fpm (as appropriate)."
+recipe "nginx::config_server", "Only intended to be included by nginx::source and nginx::default.  Does the common configuration for any installation type."
 
 %w{ ubuntu debian }.each do |os|
   supports os

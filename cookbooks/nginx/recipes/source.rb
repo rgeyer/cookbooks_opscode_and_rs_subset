@@ -46,66 +46,6 @@ bash "compile_nginx_source" do
   creates node[:nginx][:src_binary]
 end
 
-directory node[:nginx][:log_dir] do
-  mode 0755
-  owner node[:nginx][:user]
-  action :create
-end
+include_recipe "nginx::config_server"
 
-directory node[:nginx][:dir] do
-  owner "root"
-  group "root"
-  mode "0755"
-end
 
-runit_service "nginx"
-
-service "nginx" do
-  subscribes :restart, resources(:bash => "compile_nginx_source")
-end
-
-%w{ sites-available sites-enabled conf.d }.each do |dir|
-  directory "#{node[:nginx][:dir]}/#{dir}" do
-    owner "root"
-    group "root"
-    mode "0755"
-  end
-end
-
-%w{nxensite nxdissite}.each do |nxscript|
-  template "/usr/sbin/#{nxscript}" do
-    source "#{nxscript}.erb"
-    mode "0755"
-    owner "root"
-    group "root"
-  end
-end
-
-## Move Nginx
-content_dir = node[:nginx][:content_dir]
-bash 'Move Nginx Data Dir' do
-  not_if do File.directory?(content_dir) end
-  code <<-EOF
-    `mkdir -p #{content_dir}`
-    `cp -rf /var/www/. #{content_dir}`
-    `rm -rf /var/www`
-    `ln -nsf #{content_dir} /var/www`
-  EOF
-end
-
-template "nginx.conf" do
-  path "#{node[:nginx][:dir]}/nginx.conf"
-  source "nginx.conf.erb"
-  owner "root"
-  group "root"
-  mode "0644"
-  notifies :restart, resources(:service => "nginx"), :immediately
-end
-
-cookbook_file "#{node[:nginx][:dir]}/mime.types" do
-  source "mime.types"
-  owner "root"
-  group "root"
-  mode "0644"
-  notifies :restart, resources(:service => "nginx"), :immediately
-end
