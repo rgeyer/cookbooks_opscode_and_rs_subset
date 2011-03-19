@@ -31,14 +31,15 @@ nginx_version = node[:nginx][:version]
 configure_flags = node[:nginx][:configure_flags].join(" ")
 node.set[:nginx][:daemon_disable] = true
 
-remote_file "/tmp/nginx-#{nginx_version}.tar.gz" do
-  source "http://sysoev.ru/nginx/nginx-#{nginx_version}.tar.gz"
-  action :create_if_missing
-end
+#remote_file "/tmp/nginx-#{nginx_version}.tar.gz" do
+#  source "http://sysoev.ru/nginx/nginx-#{nginx_version}.tar.gz"
+#  action :create_if_missing
+#end
 
 bash "compile_nginx_source" do
   cwd "/tmp"
   code <<-EOH
+    wget -q -O /tmp/nginx-#{nginx_version}.tar.gz http://sysoev.ru/nginx/nginx-#{nginx_version}.tar.gz
     tar zxf nginx-#{nginx_version}.tar.gz
     cd nginx-#{nginx_version} && ./configure #{configure_flags}
     make && make install
