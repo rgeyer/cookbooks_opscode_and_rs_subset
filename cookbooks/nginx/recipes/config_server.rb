@@ -73,7 +73,7 @@ end
 runit_service "nginx"
 
 service "nginx" do
-  #supports :status => true, :restart => true, :reload => true
+  supports :status => true, :restart => true, :reload => true
   action [ :enable, :start ]
 end
 
