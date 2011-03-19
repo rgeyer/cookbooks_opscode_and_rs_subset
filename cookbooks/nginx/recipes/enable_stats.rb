@@ -1,4 +1,4 @@
-include_recipe "nginx::default"
+include_recipe "nginx::config_server"
 
 # Load the nginx plugin in the main config file
 node[:rs_utils][:plugin_list] += " nginx" unless node[:rs_utils][:plugin_list] =~ /nginx/

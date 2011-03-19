@@ -4,7 +4,7 @@ underscored_accept_fqdn=accept_fqdn.gsub(".","_")
 rsa_cert="#{node[:nginx][:dir]}/ssl/#{node[:nginx][:accept_fqdn]}.crt"
 rsa_key="#{node[:nginx][:dir]}/ssl/#{node[:nginx][:accept_fqdn]}.key"
 
-include_recipe "nginx::default"
+include_recipe "nginx::config_server"
 
 directory "#{node[:nginx][:dir]}/ssl" do
   mode 0644
