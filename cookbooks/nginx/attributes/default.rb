@@ -1,4 +1,4 @@
-default[:nginx][:version]      = "0.7.67"
+default[:nginx][:version]      = "0.8.54"
 default[:nginx][:install_path] = "/opt/nginx-#{nginx[:version]}"
 default[:nginx][:src_binary]   = "#{nginx[:install_path]}/sbin/nginx"
 default[:nginx][:content_dir]  = "/var/www"
