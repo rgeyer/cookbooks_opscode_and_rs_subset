@@ -28,7 +28,8 @@
       ],
       "type": "string",
       "recipes": [
-        "nginx::configure_ssl_reverse_proxy"
+        "nginx::configure_ssl_reverse_proxy",
+        "nginx::config_server"
       ],
       "description": "The FQDN the server that will back the proxy, the actual source of the responses for HTTP requests.",
       "display_name": "Proxy Destination FQDN"
@@ -44,7 +45,8 @@
       ],
       "type": "array",
       "recipes": [
-        "nginx::configure_ssl_reverse_proxy"
+        "nginx::configure_ssl_reverse_proxy",
+        "nginx::config_server"
       ],
       "description": "The possible hostname aliases (if any) for the vhost.  For instance to host the same content at www.yourdomain.com and yourdomain.com simply put \"yourdomain.com\" here.  Many values can be supplied, separated by spaces. The full syntax which Nginx supports for the server_name directive are applicable here, http://wiki.nginx.org/HttpCoreModule#server_name",
       "display_name": "Nginx Site Aliases"
@@ -59,7 +61,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Number of connections per worker",
       "display_name": "Nginx Worker Connections"
@@ -73,7 +76,8 @@
       ],
       "type": "string",
       "recipes": [
-        "nginx::configure_ssl_reverse_proxy"
+        "nginx::configure_ssl_reverse_proxy",
+        "nginx::config_server"
       ],
       "description": "A boolean indicating if the proxy should redirect all requests to the destination using HTTPS.  This setting requires nginx/proxy_http to be true.",
       "display_name": "Force HTTPS?"
@@ -86,7 +90,8 @@
       ],
       "type": "string",
       "recipes": [
-        "nginx::configure_ssl_reverse_proxy"
+        "nginx::configure_ssl_reverse_proxy",
+        "nginx::config_server"
       ],
       "description": "The the proxy port to forward to",
       "display_name": "Proxy Port"
@@ -110,7 +115,8 @@
       "type": "array",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Supported MIME-types for gzip",
       "display_name": "Nginx Gzip Types"
@@ -125,7 +131,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Location of the nginx server binary",
       "display_name": "Nginx Binary"
@@ -140,7 +147,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "User nginx will run as",
       "display_name": "Nginx User"
@@ -155,7 +163,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "display_name": "Nginx Keepalive Timeout"
     },
@@ -169,7 +178,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Whether gzip is proxied",
       "display_name": "Nginx Gzip Proxied"
@@ -184,7 +194,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Amount of compression to use",
       "display_name": "Nginx Gzip Compression Level"
@@ -199,7 +210,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Location of nginx configuration files",
       "display_name": "Nginx Directory"
@@ -213,7 +225,8 @@
       ],
       "type": "string",
       "recipes": [
-        "nginx::configure_ssl_reverse_proxy"
+        "nginx::configure_ssl_reverse_proxy",
+        "nginx::config_server"
       ],
       "description": "A boolean indicating if the proxy should listen and forward traffic on port 80 (HTTP)",
       "display_name": "Proxy for HTTP?"
@@ -226,7 +239,8 @@
       ],
       "type": "string",
       "recipes": [
-        "nginx::configure_ssl_reverse_proxy"
+        "nginx::configure_ssl_reverse_proxy",
+        "nginx::config_server"
       ],
       "description": "The FQDN of a domain name which will be proxied to another server and port",
       "display_name": "Proxy for FQDN"
@@ -241,7 +255,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "display_name": "Nginx Server Names Hash Bucket Size"
     },
@@ -253,7 +268,8 @@
       ],
       "type": "string",
       "recipes": [
-        "nginx::configure_ssl_reverse_proxy"
+        "nginx::configure_ssl_reverse_proxy",
+        "nginx::config_server"
       ],
       "description": "The password used to protect the PKCS12 file.  This password is specified when the certificate is exported from windows",
       "display_name": "PKCS12 Cert Password"
@@ -268,7 +284,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Number of worker processes",
       "display_name": "Nginx Worker Processes"
@@ -283,7 +300,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Version of HTTP Gzip",
       "display_name": "Nginx Gzip HTTP Version"
@@ -296,7 +314,8 @@
       ],
       "type": "string",
       "recipes": [
-        "nginx::configure_ssl_reverse_proxy"
+        "nginx::configure_ssl_reverse_proxy",
+        "nginx::config_server"
       ],
       "description": "The S3 bucket containing site certificate and key pairs in the pkcs12 format.",
       "display_name": "S3 Bucket"
@@ -311,7 +330,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Location for nginx logs",
       "display_name": "Nginx Log Directory"
@@ -326,7 +346,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Location of nginx content files",
       "display_name": "Nginx Content Directory"
@@ -341,7 +362,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Whether gzip is enabled",
       "display_name": "Nginx Gzip"
@@ -356,7 +378,8 @@
       "type": "string",
       "recipes": [
         "nginx::default",
-        "nginx::source"
+        "nginx::source",
+        "nginx::config_server"
       ],
       "description": "Whether to enable keepalive",
       "display_name": "Nginx Keepalive"

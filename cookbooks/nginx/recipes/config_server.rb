@@ -37,7 +37,7 @@ end
 ## Move Nginx
 content_dir = node[:nginx][:content_dir]
 bash 'Move Nginx Data Dir' do
-  not_if File.directory?(content_dir)
+  not_if ::File.symlink?('/var/www')
   code <<-EOF
     `mkdir -p #{content_dir}`
     `cp -rf /var/www/. #{content_dir}`
