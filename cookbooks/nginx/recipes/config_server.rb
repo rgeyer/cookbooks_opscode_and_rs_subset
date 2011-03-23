@@ -78,7 +78,7 @@ Chef::Log.info("Just before service resource")
 
 service "nginx" do
   supports :status => true, :restart => true, :reload => true
-  action [ :enable, :start ]
+  action [ :start ]
 end
 
 Chef::Log.info("Just before disable default")
