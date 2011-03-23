@@ -70,25 +70,17 @@ remote_file "#{node[:nginx][:dir]}/mime.types" do
   mode "0644"
 end
 
-Chef::Log.info("Just before runit_service")
-
 runit_service "nginx"
 
-Chef::Log.info("Just before service resource")
-
-service "nginx" do
-  supports :status => true, :restart => true, :reload => true
-  action [ :start ]
-end
-
-Chef::Log.info("Just before disable default")
+#service "nginx" do
+#  supports :status => true, :restart => true, :reload => true
+#  action [ :start ]
+#end
 
 # Disable the default site
 nginx_site "default" do
   enable false
 end
-
-Chef::Log.info("Just before enable stats vhost")
 
 nginx_enable_vhost node.hostname do
   template "default-site.erb"
