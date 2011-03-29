@@ -79,6 +79,7 @@ runit_service "nginx"
 
 # Disable the default site
 nginx_site "default" do
+  not_if do !::File.exist?(::File.join(node[:nginx][:dir], "sites-available", "default")) end
   enable false
 end
 
