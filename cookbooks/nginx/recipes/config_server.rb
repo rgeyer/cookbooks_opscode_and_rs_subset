@@ -40,7 +40,7 @@ bash 'Move Nginx Data Dir' do
   not_if do ::File.symlink?('/var/www') end
   code <<-EOF
     `mkdir -p #{content_dir}`
-    `cp -rf /var/www/. #{content_dir}`
+    `cp -rf /var/www/* #{content_dir}`
     `rm -rf /var/www`
     `ln -nsf #{content_dir} /var/www`
   EOF
