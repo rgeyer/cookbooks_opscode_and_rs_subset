@@ -1,44 +1,261 @@
 {
-    "providing": {
-    },
-    "attributes": {
-    },
-    "replacing": {
-    },
-    "dependencies": {
-      "nginx": [
+  "conflicting": {
+  },
+  "license": "Apache 2.0",
+  "providing": {
+  },
+  "recipes": {
+    "passenger_enterprise": "Installs Passenger gem with Ruby Enterprise Edition",
+    "passenger_enterprise::nginx": "Installs Passenger gem w/ REE, and recompiles support into Nginx",
+    "passenger_enterprise::apache2": "Enables Apache module configuration for passenger under Ruby Enterprise Edition"
+  },
+  "maintainer": "Opscode, Inc.",
+  "replacing": {
+  },
+  "maintainer_email": "ops@opscode.com",
+  "description": "Installs and configures Passenger under Ruby Enterprise Edition with Apache",
+  "version": "0.4.2",
+  "groupings": {
+  },
+  "attributes": {
+    "nginx/worker_connections": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
 
       ],
-      "apache2": [
+      "default": "1024",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Number of connections per worker",
+      "display_name": "Nginx Worker Connections"
+    },
+    "nginx/gzip_types": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
 
       ],
-      "ruby_enterprise": [
+      "default": [
+        "text/plain",
+        "text/html",
+        "text/css",
+        "application/x-javascript",
+        "text/xml",
+        "application/xml",
+        "application/xml+rss",
+        "text/javascript"
+      ],
+      "type": "array",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Supported MIME-types for gzip",
+      "display_name": "Nginx Gzip Types"
+    },
+    "nginx/binary": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
 
-      ]
+      ],
+      "default": "/usr/sbin/nginx",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Location of the nginx server binary",
+      "display_name": "Nginx Binary"
     },
-    "groupings": {
-    },
-    "recommendations": {
-    },
-    "platforms": {
-      "ubuntu": [
+    "nginx/user": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
 
-      ]
+      ],
+      "default": "www-data",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "User nginx will run as",
+      "display_name": "Nginx User"
     },
-    "license": "Apache 2.0",
-    "version": "0.4.2",
-    "maintainer": "Opscode, Inc.",
-    "suggestions": {
+    "nginx/keepalive_timeout": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "65",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "display_name": "Nginx Keepalive Timeout"
     },
-    "recipes": {
-      "passenger_enterprise": "Installs Passenger gem with Ruby Enterprise Edition",
-      "passenger_enterprise::nginx": "Installs Passenger gem w/ REE, and recompiles support into Nginx",
-      "passenger_enterprise::apache2": "Enables Apache module configuration for passenger under Ruby Enterprise Edition"
+    "nginx/gzip_proxied": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "any",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Whether gzip is proxied",
+      "display_name": "Nginx Gzip Proxied"
     },
-    "maintainer_email": "ops@opscode.com",
-    "name": "passenger_enterprise",
-    "conflicting": {
+    "nginx/gzip_comp_level": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "2",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Amount of compression to use",
+      "display_name": "Nginx Gzip Compression Level"
     },
-    "description": "Installs and configures Passenger under Ruby Enterprise Edition with Apache",
-    "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n"
-  }
+    "nginx/dir": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "/etc/nginx",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Location of nginx configuration files",
+      "display_name": "Nginx Directory"
+    },
+    "nginx/server_names_hash_bucket_size": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "64",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "display_name": "Nginx Server Names Hash Bucket Size"
+    },
+    "nginx/worker_processes": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "1",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Number of worker processes",
+      "display_name": "Nginx Worker Processes"
+    },
+    "nginx/gzip_http_version": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "1.0",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Version of HTTP Gzip",
+      "display_name": "Nginx Gzip HTTP Version"
+    },
+    "nginx/log_dir": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "/var/log/nginx",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Location for nginx logs",
+      "display_name": "Nginx Log Directory"
+    },
+    "nginx/content_dir": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "/var/www",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Location of nginx content files",
+      "display_name": "Nginx Content Directory"
+    },
+    "nginx/gzip": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "on",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Whether gzip is enabled",
+      "display_name": "Nginx Gzip"
+    },
+    "nginx/keepalive": {
+      "required": "optional",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "default": "on",
+      "type": "string",
+      "recipes": [
+        "passenger_enterprise::nginx"
+      ],
+      "description": "Whether to enable keepalive",
+      "display_name": "Nginx Keepalive"
+    }
+  },
+  "recommendations": {
+  },
+  "dependencies": {
+    "nginx": [
+
+    ],
+    "apache2": [
+
+    ],
+    "ruby_enterprise": [
+
+    ]
+  },
+  "platforms": {
+    "ubuntu": [
+
+    ]
+  },
+  "name": "passenger_enterprise",
+  "suggestions": {
+  },
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n"
+}
