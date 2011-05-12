@@ -42,7 +42,7 @@ define :nginx_enable_vhost, :fqdn => nil, :aliases => nil do
       :params => params
     )
     if ::File.exists?("#{node[:nginx][:dir]}/sites-enabled/#{fqdn}.conf")
-      notifies :reload, resources(:service => "nginx"), :delayed
+      notifies :restart, resources(:service => "nginx"), :delayed
     end
   end
 
@@ -51,5 +51,5 @@ define :nginx_enable_vhost, :fqdn => nil, :aliases => nil do
   end
   # /END - The equivalent of web_app in the apache2 cookbook
 
-  right_link_tag "nginx::vhost=#{fqdn}"
+  right_link_tag "nginx:vhost=#{fqdn}"
 end
