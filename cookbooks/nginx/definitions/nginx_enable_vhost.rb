@@ -3,12 +3,6 @@ define :nginx_enable_vhost, :fqdn => nil, :aliases => nil do
   docroot = ::File.join(node[:nginx][:content_dir],fqdn,"htdocs")
   systemroot = ::File.join(docroot, "system")
 
-  # A workaround for a bug in RightScale's implementation of chef, where exluded optional
-  # attributes cause all attributes to be nil.  This allows the user to provide a value
-  # for the optional input which will be ignored.
-  # RightScale ticket #101228-000015
-  params[:aliases] = nil if params[:aliases] == "blank"
-
   Chef::Log.info "Setting up vhost for fqdn (#{fqdn})"
 
   # Create the sites new home
